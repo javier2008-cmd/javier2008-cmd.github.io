@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="titulo descripcion">
+  <title id="titulo">Topología objetivo de la red de Horta Viva</title>
+  <desc id="descripcion">Diagrama de red con cortafuegos, dos switches, puntos de acceso, servidores virtualizados y zonas VLAN separadas.</desc>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef6ff"/>
+    </linearGradient>
+    <linearGradient id="azul" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/>
+      <stop offset="1" stop-color="#bfdbfe"/>
+    </linearGradient>
+    <linearGradient id="verde" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d1fae5"/>
+      <stop offset="1" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <linearGradient id="ambar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fef3c7"/>
+      <stop offset="1" stop-color="#fde68a"/>
+    </linearGradient>
+    <filter id="sombra" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .titulo { font-family: Arial, Helvetica, sans-serif; font-size: 26px; font-weight: 800; fill: #0f172a; }
+      .subtitulo { font-family: Arial, Helvetica, sans-serif; font-size: 14px; fill: #64748b; }
+      .caja { stroke: #cbd5e1; stroke-width: 1.5; rx: 16; }
+      .caja-azul { fill: url(#azul); }
+      .caja-verde { fill: url(#verde); }
+      .caja-ambar { fill: url(#ambar); }
+      .caja-blanca { fill: #ffffff; }
+      .etiqueta { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 700; fill: #1e293b; }
+      .detalle { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #475569; }
+      .vlan { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 700; fill: #1d4ed8; }
+      .linea { stroke: #64748b; stroke-width: 2.5; fill: none; }
+      .linea-fina { stroke: #94a3b8; stroke-width: 1.8; fill: none; stroke-dasharray: 5 5; }
+      .icono { font-family: Arial, Helvetica, sans-serif; font-size: 22px; }
+      .leyenda { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#fondo)"/>
+  <text x="60" y="58" class="titulo">Horta Viva · Topología objetivo</text>
+  <text x="60" y="82" class="subtitulo">Red segmentada, cortafuegos perimetral y servidores virtualizados · 2.º SMR</text>
+
+  <!-- Internet -->
+  <g filter="url(#sombra)">
+    <rect x="60" y="125" width="190" height="90" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="155" y="158" text-anchor="middle" class="icono">☁️</text>
+    <text x="155" y="184" text-anchor="middle" class="etiqueta">Internet / nube</text>
+    <text x="155" y="202" text-anchor="middle" class="detalle">ERP · correo · tienda online</text>
+  </g>
+  <line x1="250" y1="170" x2="330" y2="170" class="linea" marker-end="url(#flecha)"/>
+
+  <!-- Router operador -->
+  <g filter="url(#sombra)">
+    <rect x="330" y="125" width="160" height="90" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="410" y="158" text-anchor="middle" class="icono">📡</text>
+    <text x="410" y="184" text-anchor="middle" class="etiqueta">Router operador</text>
+    <text x="410" y="202" text-anchor="middle" class="detalle">modo puente / DMZ</text>
+  </g>
+  <line x1="490" y1="170" x2="570" y2="170" class="linea" marker-end="url(#flecha)"/>
+
+  <!-- Firewall -->
+  <g filter="url(#sombra)">
+    <rect x="570" y="115" width="200" height="110" rx="18" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="670" y="150" text-anchor="middle" class="icono">🛡️</text>
+    <text x="670" y="178" text-anchor="middle" class="etiqueta">Cortafuegos</text>
+    <text x="670" y="197" text-anchor="middle" class="detalle">NAT · VPN · reglas entre VLANs</text>
+    <text x="670" y="214" text-anchor="middle" class="vlan">punto único de fallo a mejorar</text>
+  </g>
+  <line x1="770" y1="170" x2="850" y2="170" class="linea" marker-end="url(#flecha)"/>
+
+  <!-- Core switch -->
+  <g filter="url(#sombra)">
+    <rect x="850" y="115" width="230" height="110" rx="18" fill="url(#azul)" stroke="#93c5fd" stroke-width="1.5"/>
+    <text x="965" y="150" text-anchor="middle" class="icono">🔀</text>
+    <text x="965" y="178" text-anchor="middle" class="etiqueta">SW-CORE</text>
+    <text x="965" y="197" text-anchor="middle" class="detalle">802.1Q · STP · LACP</text>
+    <text x="965" y="214" text-anchor="middle" class="vlan">VLAN 10 gestión</text>
+  </g>
+
+  <!-- Trunk to access switch -->
+  <line x1="965" y1="225" x2="965" y2="300" class="linea" marker-end="url(#flecha)"/>
+  <text x="980" y="268" class="detalle">trunk 802.1Q</text>
+
+  <!-- Access switch -->
+  <g filter="url(#sombra)">
+    <rect x="850" y="300" width="230" height="100" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="965" y="334" text-anchor="middle" class="icono">🔀</text>
+    <text x="965" y="360" text-anchor="middle" class="etiqueta">SW-ACCESO</text>
+    <text x="965" y="378" text-anchor="middle" class="detalle">puertos de acceso por zona</text>
+  </g>
+
+  <!-- Access lines to zones -->
+  <line x1="850" y1="350" x2="700" y2="350" class="linea-fina"/>
+  <line x1="850" y1="350" x2="700" y2="440" class="linea-fina"/>
+  <line x1="850" y1="350" x2="700" y2="530" class="linea-fina"/>
+  <line x1="850" y1="350" x2="700" y2="620" class="linea-fina"/>
+
+  <!-- VLAN zones -->
+  <g filter="url(#sombra)">
+    <rect x="410" y="305" width="290" height="78" rx="16" class="caja caja-azul"/>
+    <text x="430" y="335" class="etiqueta">🏢 Oficina · VLAN 20</text>
+    <text x="430" y="355" class="detalle">18 puestos · dirección · administración</text>
+    <text x="430" y="371" class="vlan">192.168.20.0/24</text>
+  </g>
+  <g filter="url(#sombra)">
+    <rect x="410" y="395" width="290" height="78" rx="16" class="caja caja-verde"/>
+    <text x="430" y="425" class="etiqueta">🏭 Producción · VLAN 30</text>
+    <text x="430" y="445" class="detalle">nave · etiquetado · lectores</text>
+    <text x="430" y="461" class="vlan">192.168.30.0/24</text>
+  </g>
+  <g filter="url(#sombra)">
+    <rect x="410" y="485" width="290" height="78" rx="16" class="caja caja-ambar"/>
+    <text x="430" y="515" class="etiqueta">🛒 TPV · VLAN 40</text>
+    <text x="430" y="535" class="detalle">4 puntos de venta · pasarela de pago</text>
+    <text x="430" y="551" class="vlan">192.168.40.0/24</text>
+  </g>
+  <g filter="url(#sombra)">
+    <rect x="410" y="575" width="290" height="78" rx="16" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="430" y="605" class="etiqueta">📷 IoT · VLAN 50</text>
+    <text x="430" y="625" class="detalle">cámaras · sensores de temperatura</text>
+    <text x="430" y="641" class="vlan">192.168.50.0/24</text>
+  </g>
+
+  <!-- Guest and servers -->
+  <g filter="url(#sombra)">
+    <rect x="60" y="305" width="280" height="120" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="80" y="337" class="etiqueta">📶 Wi-Fi invitadas · VLAN 60</text>
+    <text x="80" y="358" class="detalle">portal cautivo · solo internet</text>
+    <text x="80" y="376" class="vlan">192.168.60.0/24</text>
+    <text x="80" y="400" class="detalle">Aislada de gestión, servidores e IoT</text>
+  </g>
+  <line x1="340" y1="365" x2="570" y2="365" class="linea-fina"/>
+
+  <g filter="url(#sombra)">
+    <rect x="60" y="470" width="280" height="183" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="80" y="502" class="etiqueta">🖥️ Servidores · VLAN 70</text>
+    <text x="80" y="523" class="detalle">Hipervisor Proxmox VE / VirtualBox</text>
+    <text x="80" y="545" class="vlan">192.168.70.0/24</text>
+    <text x="80" y="570" class="detalle">DC01 · AD DS · DNS · DHCP</text>
+    <text x="80" y="590" class="detalle">FS01 · archivos · cuotas</text>
+    <text x="80" y="610" class="detalle">WEB01 · intranet de incidencias</text>
+    <text x="80" y="630" class="detalle">MON01 · Zabbix · BKP01 · copias</text>
+  </g>
+  <line x1="340" y1="560" x2="570" y2="560" class="linea-fina"/>
+
+  <!-- Legend -->
+  <g>
+    <rect x="900" y="500" width="240" height="153" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="918" y="528" class="etiqueta">Leyenda</text>
+    <line x1="918" y1="548" x2="960" y2="548" class="linea"/>
+    <text x="972" y="552" class="leyenda">Enlace troncal / principal</text>
+    <line x1="918" y1="574" x2="960" y2="574" class="linea-fina"/>
+    <text x="972" y="578" class="leyenda">Enlace de acceso / lógico</text>
+    <rect x="918" y="594" width="26" height="16" rx="4" fill="#fee2e2" stroke="#fca5a5"/>
+    <text x="954" y="606" class="leyenda">Zona crítica / perímetro</text>
+    <rect x="918" y="620" width="26" height="16" rx="4" fill="#d1fae5" stroke="#86efac"/>
+    <text x="954" y="632" class="leyenda">Zona de producción</text>
+  </g>
+
+  <text x="60" y="700" class="detalle">Nota: diagrama orientativo de laboratorio. El equipo debe adaptar direcciones, puertos y número de equipos a su diseño final.</text>
+</svg>
